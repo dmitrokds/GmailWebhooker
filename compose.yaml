@@ -1,0 +1,15 @@
+services:
+  redis:
+    image: redislabs/redismod
+    ports:
+      - '6379:6379'
+  api:
+    build: .
+    volumes:
+      - .:/app
+      - ./tokens:/app/tokens
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    command: ["python3", "main.py"]
